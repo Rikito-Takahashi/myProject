@@ -1,14 +1,22 @@
 @extends('layouts.login_layout')
 {{-- @section('title', 'ログイン') --}}
 
-@section('pwd_form')
+@section('reset')
     <h2>パスワード再設定</h2>
 
-    <form action="{{ route('pwd_reset_complete') }}" method="POST">
+    <form action="{{ route('password.update') }}" method="POST">
         @csrf
 
             <input type="hidden" name="token" value="{{ $token }}">
-            <input type="email" name="email" value="{{ old('email') }}" required>
+            <input type="hidden" name="email" value="{{ request()->email }}" required>
+
+            @if ($errors->any())
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+            @endif
         
         <div>
             <label>新規パスワードを入力</label>
@@ -17,7 +25,7 @@
 
         <div>
             <label>新規パスワード確認入力</label>
-            <input type="password" id="password_conf" name="password_conf" value="">
+            <input type="password" id="password_confirmation" name="password_confirmation" value="">
         </div>
 
         <button type="submit">パスワード登録</button>

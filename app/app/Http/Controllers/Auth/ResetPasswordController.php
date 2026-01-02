@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Foundation\Auth\ResetsPasswords;// パスワードの再設定処理を行うトレイト
+
+use Illuminate\Http\Request;
 
 class ResetPasswordController extends Controller
 {
@@ -19,12 +21,16 @@ class ResetPasswordController extends Controller
     |
     */
 
-    use ResetsPasswords;
+    use ResetsPasswords;// ResetsPasswordsトレイトを使用（パスワード更新の本処理を内部で定義している）
+
 
     /**
      * Where to redirect users after resetting their password.
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    // protected $redirectTo = RouteServiceProvider::HOME;
+
+     // パスワード再設定後の遷移先
+    protected $redirectTo = '/pwd_reset_complete';
 }

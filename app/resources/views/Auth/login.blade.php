@@ -3,6 +3,15 @@
 
 @section('login')
     <h2>ログイン</h2>
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
     <form action="{{ route('login') }}" method="POST">
         @csrf
@@ -17,7 +26,7 @@
             <input type="password" id="password" name="password">
         </div>
 
-        <a href="">パスワードの変更はこちらから</a>
+        <a href="{{ route('pwd_reset') }}">パスワードの変更はこちらから</a>
 
         <button type="submit">ログイン</button>
     </form>

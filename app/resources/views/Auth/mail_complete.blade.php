@@ -3,6 +3,7 @@
 
 @section('mail_complete')
     <h2>パスワード再設定</h2>
+    @csrf
 
     <h2>メール送信完了</h2>
     <div>

@@ -18,16 +18,14 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<header>
-    <p>仮ヘッダー　仮ROGO</p>
-</header>
+
+@include('layouts.header')
+
     <main>
-        @yield('login')
-        @yield('signup')
-        @yield('signup_conf')
-        @yield('pwd_reset')
-        @yield('mail_complete')
-        @yield('reset')
-        @yield('pwd_reset_complete')
+        @yield('main')
+        @yield('create_post')
+        @yield('mypage')
+        @yield('user_edit')
     </main>
+
 </html>
