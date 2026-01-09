@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
+use Illuminate\Http\Request;
+
 class LoginController extends Controller
 {
     /*
@@ -38,4 +40,48 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    // 論理削除されたユーザーのログイン防止用
+    protected function credentials(Request $request){
+        return [
+            'email' => $request->email,
+            'password' => $request->password,
+            'del_flg' => 0 // これで del_flg=1 のユーザーをブロック
+        ];
+    }
+
+    // 管理者ログイン用
+    protected function authenticated(Request $request, $user){
+
+    if ($user->role == 0) {
+        return redirect()->route('admin.dashboard'); // 管理者用ページ
+    }
+
+    return redirect()->route('main'); // 一般ユーザー用メインページ
+    }
+
+    public function redirectToGoogle()
+{
+    return Socialite::driver('google')->redirect();
+}
+
+// Googleアカウントでのログイン機能用
+public function handleGoogleCallback()
+{
+    $googleUser = Socialite::driver('google')->stateless()->user();
+
+    $user = User::firstOrCreate(
+        ['email' => $googleUser->getEmail()],
+        [
+            'name' => $googleUser->getName(),
+            'email' => $googleUser->getEmail(),
+            'password' => bcrypt(uniqid()), // パスワードはランダムで問題ありません
+        ]
+    );
+
+    Auth::login($user);
+
+    return redirect()->route('main');
+}
+
 }

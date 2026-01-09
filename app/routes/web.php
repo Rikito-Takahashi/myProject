@@ -6,6 +6,10 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 
 use App\Http\Controllers\Auth\ResetPasswordController;
 
+use App\Http\Controllers\FollowController;
+
+use App\Http\Controllers\Auth\GoogleLoginController;
+
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -20,7 +24,12 @@ use Illuminate\Support\Facades\Auth;
 */
 Auth::routes();// Laravel標準の認証ルート（ログイン・ログアウト・パスワードリセット等の一式を内蔵)
 
-// Route::get('/', [DisplayController::class, 'index'])->name('login');
+// 管理者ページ表示用
+Route::get('/admin/dashboard', [DisplayController::class, 'dashboard'])->name('admin.dashboard')->middleware('auth');
+// 管理者用ユーザー検索結果画面表示用
+Route::get('/admin/user_list', [DisplayController::class, 'userSearch'])->name('admin.user_list')->middleware('auth');
+// 管理者用作品検索結果画面表示用
+Route::get('/admin/post_list', [DisplayController::class, 'postSearch'])->name('admin.post_list')->middleware('auth');
 
 // 新規登録フォーム用
 Route::get('/register', [RegisterController::class, 'registerForm'])->name('register');
@@ -67,9 +76,43 @@ Route::get('/mypage', [DisplayController::class, 'mypage'])->name('mypage');
 Route::get('/user_edit', [RegisterController::class, 'user_editForm'])->name('user_edit');
 // アカウント情報更新処理用
 Route::post('/user_edit', [RegisterController::class, 'user_edit'])->name('user_edit');
+// アカウント情報編集内容確認画面表示用
+Route::post('/user_edit_conf', [RegisterController::class, 'user_edit_conf'])->name('user_edit_conf');
+// アカウントアイコン/ヘッダー更新用
+Route::post('/user_img_edit', [RegisterController::class, 'user_img_edit'])->name('user_img_edit');
+// アカウント削除確認画面表示用
+Route::get('/user_delete_conf', [RegisterController::class, 'user_delete_conf'])->name('user_delete_conf');
+// アカウント論理削除用
+Route::post('/user_delete', [RegisterController::class, 'user_delete'])->name('user_delete');
 
 // 作品投稿画面表示用
 Route::get('/create_post', [RegisterController::class, 'create_postForm'])->name('create_post');
 // 作品投稿処理用
 Route::post('/create_post', [RegisterController::class, 'create_post'])->name('create_post');
+
+// 検索結果画面表示用
+Route::get('/post_search', [DisplayController::class, 'post_search'])->name('post_search');
+
+// 作品詳細画面表示用
+Route::get('/post_detail/{id}', [DisplayController::class, 'post_detail'])->name('post_detail');
+// 自身の作品詳細画面表示用
+Route::get('/mypost_detail{id}', [DisplayController::class, 'mypost_detail'])->name('mypost_detail');
+
+// 作品情報編集画面表示用
+Route::get('mypost_edit/{id}', [RegisterController::class, 'mypost_edit'])->name('mypost_edit');
+// 作品情報更新処理用
+Route::post('/mypost_update/{id}', [RegisterController::class, 'mypost_update'])->name('mypost_update');
+// 投稿削除処理用
+Route::post('/mypost_delete/{id}', [RegisterController::class, 'mypost_delete'])->name('mypost_delete');
+
+
+// ユーザーページ表示用
+Route::get('/user_page/{id}', [DisplayController::class, 'user_page'])->name('user_page');
+
+// フォロー/フォロワー機能用
+Route::post('/follow', [FollowController::class, 'toggle'])->name('follow.toggle');
+
+// Googleアカウントでのログイン機能用
+Route::get('/login/google', [GoogleLoginController::class, 'redirectToGoogle'])->name('login.google');
+Route::get('/login/google/callback', [GoogleLoginController::class, 'handleGoogleCallback']);
 

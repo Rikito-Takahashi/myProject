@@ -37102,7 +37102,47 @@ module.exports = function(module) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+console.log('follow script loaded');
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+console.log('follow script loaded');
+console.log('follow.js loaded');
+$.ajaxSetup({
+  headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  }
+});
+
+// $('.follow-button').click(function () {
+//     const followId = $(this).data('follow-id');
+//     const button = $(this);
+
+//     $.post('/follow', { follow_id: followId })
+//         .done(function (data) {
+//             if (data.status === 'followed') {
+//                 button.text('フォロー解除');
+//             } else {
+//                 button.text('フォローする');
+//             }
+//         });
+// });
+
+$(document).on('click', '.follow-button', function () {
+  console.log('フォローボタン押された');
+  var followId = $(this).data('follow-id');
+  var button = $(this);
+  $.post('/follow', {
+    follow_id: followId
+  }).done(function (data) {
+    console.log('success:', data);
+    if (data.status === 'followed') {
+      button.text('フォロー解除');
+    } else {
+      button.text('フォローする');
+    }
+  }).fail(function (xhr, status, error) {
+    console.error('リクエスト失敗:', error);
+  });
+});
 
 /***/ }),
 
