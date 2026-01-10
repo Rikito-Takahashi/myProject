@@ -73,6 +73,9 @@
 
 <div class="text-center">
     <a href="{{ route('mypage') }}">マイページへ戻る</a>
-</div>    
+</div>
+
+<br>
+<br>
 
 @endsection

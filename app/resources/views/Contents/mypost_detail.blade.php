@@ -22,23 +22,25 @@
                     @endif
                     <div class="ms-3">
                         <p>{{ $post->user->name }}</p>
-                    </div>    
-                </div>
+                        
+                </div>    
+                    
+        </div> 
 
-            {{-- アカウント情報編集完了後リダイレクト時メッセージ表示関連ここから --}}
+                    {{-- 作品情報編集完了後リダイレクト時メッセージ表示関連ここから --}}
+            <div class="mb-3">
                 @if(session('success'))
                     <div class="popup-message">
                         <h4>{{ session('success') }}</h4>
                     </div>
                 @endif
-                    
-        </div> 
+            </div>
 
                         <div class="mb-3">
-                    <a href="{{ route('mypost_edit', ['id' => $post->id]) }}" class="btn btn-outline-Success btn-sm me-2">
+                    <a href="{{ route('mypost_edit', ['id' => $post->id]) }}" class="btn btn-outline-Success btn-sm me-2 px-3 py-1 fs-5">
                         作品を編集
                     </a>
-                    <a href="{{ route('user_page', ['id' => $post->user->id]) }}" class="btn btn-outline-info btn-sm">
+                    <a href="{{ route('mypage') }}" class="btn btn-outline-info btn-sm px-3 py-1 fs-5">
                         マイページへ
                     </a>
                 </div>

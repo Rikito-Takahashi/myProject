@@ -34,7 +34,7 @@
             @endif
             <div class="ms-4">
                 <p>{{ Auth::user()->name }}</p>
-                <p class="mb-1">フォロー中　　</p>
+                {{-- <p class="mb-1">フォロー中　　</p> --}}
                 <p>{{ Auth::user()->profile }}</p>
 
             </div>     

@@ -19,8 +19,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<header>
-    <h3>ArtMuch</h3>
+<header class="d-flex justify-content-between align-items-center px-4 py-2 bg-dark text-white">
+    <h3 class="m-0">ArtMuch</h3>
 </header>
     <main>
         @yield('login')
