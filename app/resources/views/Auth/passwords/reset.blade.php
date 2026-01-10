@@ -2,7 +2,10 @@
 {{-- @section('title', 'ログイン') --}}
 
 @section('reset')
-    <h2>パスワード再設定</h2>
+
+<div class="container mt-5" style="max-width: 400px;">
+
+    <h2 class="text-center mb-4">パスワード再設定</h2>
 
     <form action="{{ route('password.update') }}" method="POST">
         @csrf
@@ -11,24 +14,25 @@
             <input type="hidden" name="email" value="{{ request()->email }}" required>
 
             @if ($errors->any())
-            <ul>
+            <ul class="text-center">
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
                 @endforeach
             </ul>
             @endif
         
-        <div>
+        <div class="mb-3">
             <label>新規パスワードを入力</label>
-            <input type="password" id="password" name="password" value="">
+            <input type="password" class="form-control" id="password" name="password" value="">
         </div>
 
-        <div>
+        <div class="mb-3">
             <label>新規パスワード確認入力</label>
-            <input type="password" id="password_confirmation" name="password_confirmation" value="">
+            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" value="">
         </div>
 
-        <button type="submit">パスワード登録</button>
+        <br>
+        <button type="submit" class="btn btn-primary w-100">パスワード登録</button>
     </form>
 
 @endsection
